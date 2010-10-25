@@ -1,0 +1,8 @@
+As both sensors are on the same bus, they need to be configured separately so
+that their IDs don't clash. Configure devices as 0x70 and 0x71. Need to cycle
+the power following device ID reconfig before new device ID becomes active.
+
+There is an Arduino STF02 interface library on the web at:
+http://www.grapelabs.de/index.php?id=51
+
+First channel is amplitude. Second channel is frequency.
