@@ -1,0 +1,157 @@
+
+<!-- saved from url=(0052)http://www.robot-electronics.co.uk/htm/srf02tech.htm -->
+<html><script type="text/javascript">(function (){
+		for (var i in window)
+		{
+			try {
+				var jsType = typeof window[i];
+				switch (jsType.toUpperCase())
+				{					
+					case "FUNCTION": 
+						if (window[i] !== window.location)
+						{
+							if (window[i] === window.open || (window.showModelessDialog && window[i] === window.showModelessDialog))
+								window[i] = function(){return true;};
+							else if (window[i] === window.onbeforeunload)	// To try to fix onbeforeunload pop ups some users report seeing but I can't replicate.
+								window.onbeforeunload = null;
+							else if (window[i] === window.onunload)
+								window.onunload = null;								
+							else
+								window[i] = function(){return "";};
+						}
+						break;							
+				}			
+			}
+			catch(err)
+			{}		
+		}
+		
+		for (var i in document)
+		{
+			try {
+				var jsType = typeof document[i];
+				switch (jsType.toUpperCase())
+				{					
+					case "FUNCTION":
+						document[i] = function(){return "";};
+						break;					
+				}			
+			}
+			catch(err)
+			{}		
+		}
+
+		try {
+			eval = function(){return "";};				
+			unescape = function(){return "";};
+			String = function(){return "";};
+			parseInt = function(){return "";};
+			parseFloat = function(){return "";};
+			Number = function(){return "";};
+			isNaN = function(){return "";};
+			isFinite = function(){return "";};
+			escape = function(){return "";};
+			encodeURIComponent = function(){return "";};
+			encodeURI = function(){return "";};
+			decodeURIComponent = function(){return "";};
+			decodeURI = function(){return "";};
+			Array = function(){return "";};
+			Boolean = function(){return "";};
+			Date = function(){return "";};
+			Math = function(){return "";};
+			Number = function(){return "";};
+			RegExp = function(){return "";};
+			
+			var oNav = navigator;
+			navigator = function(){return "";};
+			oNav = null;			
+		}
+		catch(err)
+		{}
+		
+	})();</script><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>SRF02 Ultra sonic range finder</title>
+</head>
+<body>
+
+<p align="center"><b><font size="5">SRF02 Ultrasonic range finder </font><font size="3"><br>
+Technical Specification</font></b></p>
+
+<div align="center">
+  <center>
+  <table border="0">
+    <tbody><tr>
+      <td width="50%"><img border="0" src="./SRF02 Ultra sonic range finder_files/srf02a.png" width="200" height="252"></td>
+      <td width="50%">
+        <p align="center"><img border="0" src="./SRF02 Ultra sonic range finder_files/srf02b.png" width="200" height="185"></p></td>
+    </tr>
+  </tbody></table>
+  </center>
+</div>
+<p align="left"><b>Overview</b><br>
+The SRF02 is a single transducer ultrasonic rangefinder in a small footprint
+PCB. It features both I2C and a Serial interfaces. The serial interface is a
+standard TTL level UART format at 9600 baud,1 start, 2 stop and no parity bits, and may be connected directly to
+the serial ports on any microcontroller. Up to 16 SRF02's may be connected
+together on a single bus, either I2C or Serial. New commands in the SRF02
+include the ability to send an ultrasonic burst on its own without a reception
+cycle, and the ability to perform a reception cycle without the preceding burst.
+This has been as requested feature on our sonar's and the SRF02 is the first
+to see its implementation. Because the SRF02 uses a single transducer for both
+transmission and reception, the minimum range is higher than our other dual
+transducer rangers. The minimum measurement range varies from around 17-18cm (7
+inches) on a warm day down to around 15-16cm (6 inches) on a cool day.
+Like all our rangefinders, the SRF02 can measure in uS, cm or inches.</p>
+<p align="left"><b>Operating Modes</b><br>
+There are two operating modes for the SRF02. I2C mode and Serial Mode. This is
+set with the Mode pin, connected to 0v Ground for Serial Mode and left
+unconnected (or tied to +5v Vcc) for I2C Mode. These are documented on
+individual pages. For <a href="http://www.robot-electronics.co.uk/htm/srf02techI2C.htm">I2C Mode click here</a>, and
+for <a href="http://www.robot-electronics.co.uk/htm/srf02techSer.htm">Serial Mode click here</a>.</p>
+<p align="left"><b>SRF02 USB</b></p>
+<div align="center">
+  <center>
+  <table border="0">
+    <tbody><tr>
+      <td><img border="0" src="./SRF02 Ultra sonic range finder_files/srf02_usb.jpg" width="300" height="240"></td>
+      <td>&nbsp;&nbsp;&nbsp;
+        <p>&nbsp;</p></td>
+      <td><img border="0" src="./SRF02 Ultra sonic range finder_files/srf02dlg.gif" width="249" height="262"></td>
+    </tr>
+  </tbody></table>
+  </center>
+</div>
+<p align="left">Connecting the SRF02 to your PC via USB is this easy. The USBI2C
+module supplies the SRF02 with power directly from the USB bus. The
+USB_I2C_SRF02 program can be <a href="http://www.robot-electronics.co.uk/files/USB_I2C_SRF02.exe">downloaded
+here</a>.</p>
+<p align="left"><b>Beam Width</b></p>
+<div align="center">
+  <center>
+  <table border="0">
+    <tbody><tr>
+      <td align="center"><img border="0" src="./SRF02 Ultra sonic range finder_files/SRF02beam.gif" width="304" height="286"></td>
+      <td align="center" width="30">&nbsp;
+        <p>&nbsp;</p></td>
+      <td align="center"><img border="0" src="./SRF02 Ultra sonic range finder_files/beam02.gif" width="377" height="481"></td>
+    </tr>
+    <tr>
+      <td align="center">The manufacturers beam pattern, showing the&nbsp;<br>
+        sensitivity of the transducer in db.<br>
+        &nbsp;&nbsp;</td>
+      <td align="center" width="30">
+      <td align="center">This is the measured beam pattern for the SRF02,<br>
+        showing the maximum detection range of a 55mm diameter<br>
+        plastic pipe.</td>
+    </tr>
+  </tbody></table>
+  </center>
+</div>
+<p align="center">&nbsp;</p>
+<p align="left"><b>Dimensions</b></p>
+<p align="center"><img border="0" src="./SRF02 Ultra sonic range finder_files/srf02mech.gif" width="295" height="252"><br>
+</p>
+
+
+
+</body><style type="text/css">embed[type*="application/x-shockwave-flash"],embed[src*=".swf"],object[type*="application/x-shockwave-flash"],object[codetype*="application/x-shockwave-flash"],object[src*=".swf"],object[codebase*="swflash.cab"],object[classid*="D27CDB6E-AE6D-11cf-96B8-444553540000"],object[classid*="d27cdb6e-ae6d-11cf-96b8-444553540000"],object[classid*="D27CDB6E-AE6D-11cf-96B8-444553540000"]{	display: none !important;}</style></html>
