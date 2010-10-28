@@ -9,9 +9,9 @@ unsigned long next_tx_time = 0;
 #define SENSOR_1_ID			(0x71)
 #define SENSOR_2_ID			(0x71)
 
-#define MODE				(0x51)
-#define MIN_VALUE			(15)
-#define MAX_VALUE			(90)
+#define MODE				(0x52)
+#define MIN_VALUE			(1000)
+#define MAX_VALUE			(10000)
 #define MAX_RATE_OF_CHANGE	(1000)
 #define PAUSE_MS			(50)
 

@@ -14,6 +14,8 @@ float maxFreq = 3000;
 float freq_scalar;
 Serial myPort;
 ParticleSystem ps;
+float min_value = 1000;
+float max_value = 10000;
 
 int xdimension = 1024;
 
@@ -78,7 +80,7 @@ void serialEvent (Serial myPort)
         // Split the string by commas
         new_freq = float(inString);
         // Scale the values into a 0.0 to 1.0 range        
-        freq_scalar = ((new_freq  - 15.0)/ (90.0 - 15.0));    
+        freq_scalar = ((new_freq  - min_value)/ (max_value - min_value));    
     }
 }
 

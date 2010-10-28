@@ -15,6 +15,8 @@ float freq_scalar;
 Serial myPort;
 int pixelSize=2;
 PGraphics pg;
+float min_value = 1000;
+float max_value = 10000;
 
 void setup () 
 {
@@ -120,7 +122,7 @@ void serialEvent (Serial myPort)
         // Split the string by commas
         new_freq = float(inString);
         // Scale the values into a 0.0 to 1.0 range        
-        freq_scalar = ((new_freq  - 15.0)/ (90.0 - 15.0));    
+        freq_scalar = ((new_freq  - min_value)/ (max_value - min_value));    
     }
 }
 

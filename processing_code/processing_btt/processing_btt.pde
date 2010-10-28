@@ -2,7 +2,7 @@ import processing.serial.*;
 import ddf.minim.*;
 import ddf.minim.signals.*;
 
-static boolean use_mouse = true;
+static boolean use_mouse = false;
 static boolean mute_output = false;
  
 //Globals
@@ -13,25 +13,27 @@ float minFreq = 20;
 float maxFreq = 3000;
 float freq_scalar;
 Serial myPort;
+float min_value = 1000;
+float max_value = 10000;
 
 void setup () 
 {
-    size(512, 512);
-    // instantiate a Minim object
-    minim = new Minim(this);
-    // get a line out from Minim, 
-    // default sample rate is 44100, bit depth is 16
-    out = minim.getLineOut(Minim.STEREO, 512);
-    // create a sine wave Oscillator, set to 440 Hz, at 0.5 amplitude, 
-    // sample rate 44100 to match the line out
-    sine = new SineWave(3000, 0, 44100);
-    // add the oscillator to the line out
-    out.addSignal(sine);
+	size(512, 512);
+	// instantiate a Minim object
+	minim = new Minim(this);
+	// get a line out from Minim, 
+	// default sample rate is 44100, bit depth is 16
+	out = minim.getLineOut(Minim.STEREO, 512);
+	// create a sine wave Oscillator, set to 440 Hz, at 0.5 amplitude, 
+	// sample rate 44100 to match the line out
+	sine = new SineWave(3000, 0, 44100);
+	// add the oscillator to the line out
+	out.addSignal(sine);
 
 	if ( ! use_mouse)
-	{	
-    	myPort = new Serial(this, Serial.list()[0], 9600);
-    }    		
+	{
+		myPort = new Serial(this, Serial.list()[0], 9600);
+	}
 }
 
 void draw()
@@ -67,7 +69,7 @@ void serialEvent (Serial myPort)
         // Split the string by commas
         new_freq = float(inString);
         // Scale the values into a 0.0 to 1.0 range        
-        freq_scalar = ((new_freq  - 15.0)/ (90.0 - 15.0));    
+        freq_scalar = ((new_freq  - min_value)/ (max_value - min_value));    
     }
 }
 
