@@ -2,7 +2,8 @@ import processing.serial.*;
 import ddf.minim.*;
 import ddf.minim.signals.*;
 
-static boolean use_mouse = true;
+static boolean use_mouse = false;
+static boolean mute_output = false;
  
 //Globals
 Minim minim;
@@ -10,9 +11,7 @@ AudioOutput out;
 SineWave sine;
 float minFreq = 20;
 float maxFreq = 3000;
-float f = 0;
-float a = 0;
-int prev_good_f = 0;
+float freq_scalar;
 Serial myPort;
 
 void setup () 
@@ -29,51 +28,46 @@ void setup ()
     // add the oscillator to the line out
     out.addSignal(sine);
 
-    // List all the available serial ports
-    //  println(Serial.list());
-	
 	if ( ! use_mouse)
-	{
-    	myPort = new Serial(this, Serial.list()[0], 9600);	
-	}
+	{	
+    	myPort = new Serial(this, Serial.list()[0], 9600);
+    }    		
 }
 
 void draw()
 {
 	if (use_mouse)
-	{
-		f = mouseX/512.0;
-		a = mouseY/512.0;
-	}
+	{	
+		freq_scalar = mouseX/512.0;
+	}		
 	
-    float freqScalar = f;
-    float freq = minFreq + ((maxFreq - minFreq) * freqScalar);
+    float freq = minFreq + ((maxFreq - minFreq) * freq_scalar);
     sine.setFreq(freq);
   
-    sine.setAmp(a);
+	//Mute the output if there's nothing in range  
+  	if ((freq_scalar > 0.9) && mute_output)
+  	{  	
+  		sine.setAmp(0);
+  	}
+  	else
+  	{
+  	    sine.setAmp(0.5);
+  	}
 }
 
 void serialEvent (Serial myPort) 
 {
+	float new_freq;
+	
     // get the ASCII string:
     String inString = myPort.readStringUntil('\n');
-
+    
     if (inString != null) 
     {
         // Split the string by commas
-        int[] nums = int(split(inString, ','));
-        // Scale the values into a 0.0 to 1.0 range
-        if (nums[0]>4000)
-        {
-            nums[0]=prev_good_f;            
-        }
-        else
-        {
-            prev_good_f = nums[0]; 
-        }
-        
-        f = (nums[0] / 4000.0);
-        a = (nums[1] / 255.0);    
+        new_freq = float(inString);
+        // Scale the values into a 0.0 to 1.0 range        
+        freq_scalar = ((new_freq  - 15.0)/ (90.0 - 15.0));    
     }
 }
 
